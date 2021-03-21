@@ -79,10 +79,16 @@ public class Player {
         }
         System.out.println("\n\n");               
     }
-    public static void suitBinSort(Card[] cards) {
-        Vector<Card>[] bins=new Vector[13];
-    }
     public static void rankBinSort(Card[] cards) {
+        Vector<Card>[] bins=new Vector[13];        
+        for (int i = 0; i < bins.length; i++) {
+            bins[i]=new Vector<Card>();                 //造bins的空間            
+        }
+        for (int i = 0; i < cards.length; i++) {           //把cards按照rank大小放入bins[0]~bins[12]
+            bins[cards[i].rank-1].add(cards[i]);                        
+        }
+    }
+    public static void suitBinSort(Card[] cards) {
         
     }
     public static void findPairs(Card[] cards) {
