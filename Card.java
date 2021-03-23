@@ -10,7 +10,9 @@
  */
 public class Card {
     int rank;           //宣告樸克牌數字
-    String suit;           //宣告樸克牌花色
+    int  suit;           //宣告樸克牌花色
+    static final String[] SUITS={"Club","Diamonds","Heart","Spades"};
+    static final String[] RANKS={"A","2","3","4","5","6","7","8","9","10","J","Q","K"};    
 /**
  * 造一個可以儲放樸克牌空間的函式
  */
@@ -21,7 +23,7 @@ public class Card {
  * @param rank
  * @param suit 
  */
-    public Card(int rank, String suit) {
+    public Card(int rank, int suit) {
         this.rank = rank;
         this.suit = suit;
     }
@@ -43,14 +45,14 @@ public class Card {
  * 呼叫花色
  * @return 
  */    
-    public String getSuit() {
+    public int getSuit() {
         return suit;
     }
 /**
  * 修改花色的函式
  * @param suit 
  */
-    public void setSuit(String suit) {
+    public void setSuit(int suit) {
         this.suit = suit;
     }
 /**
@@ -59,19 +61,7 @@ public class Card {
  */
     @Override
     public String toString() {
-        if(rank==13){
-            return '(' + "rank=" + 'K' + ", suit=" + suit + ')';
-        }
-        if(rank==12){
-            return '(' + "rank=" + 'Q' + ", suit=" + suit + ')';
-        }
-        if(rank==11){
-            return '(' + "rank=" + 'J' + ", suit=" + suit + ')';
-        }
-        if(rank==1){
-            return '(' + "rank=" + 'A' + ", suit=" + suit + ')';
-        }
-        return '(' + "rank=" + rank + ", suit=" + suit + ')';
+        return '(' + "rank=" + RANKS[rank] + ", suit=" + SUITS[suit] + ')';
     }
     
     
