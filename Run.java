@@ -20,16 +20,16 @@ public class Run {
             for (int j = 0; j < 4; j++) {
                 if (j == 0) {
                     allCard[posc].setRank(i);
-                    allCard[posc].setSuit("Spade");
+                    allCard[posc].setSuit(j);
                 } else if (j == 1) {
                     allCard[posc].setRank(i);
-                    allCard[posc].setSuit("Heart");
+                    allCard[posc].setSuit(j);
                 } else if (j == 2) {
                     allCard[posc].setRank(i);
-                    allCard[posc].setSuit("Diamond");
+                    allCard[posc].setSuit(j);
                 } else if (j == 3) {
                     allCard[posc].setRank(i);
-                    allCard[posc].setSuit("Club");
+                    allCard[posc].setSuit(j);
                 }
                 posc++;
             }
@@ -60,10 +60,24 @@ public class Run {
             player[i].setPlayerNum(i + 1);                                      
         }
 
-        Deck.deal(allCard, player);                                               //用Deck的洗牌函式洗牌
-
+        Deck.deal(allCard, player);                                               //用Deck的洗牌函式洗牌        
         Player.printCard(player);                                                  //印出玩家個別的牌
-
+        for (int i = 0; i < player.length; i++) {
+            player[i].rankSort=Player.rankBinSort(player[i].pCard);   
+            player[i].suitSort=Player.suitBinSort(player[i].pCard);               
+        }
+        for (int i = 0; i < player.length; i++) {
+            Player.printSort(player[i].rankSort,player[i].playerNum);
+            Player.printSort(player[i].suitSort,player[i].playerNum);
+            System.out.println("Playernum "+player[i].playerNum);
+//            Player.findPairs(player[i].rankSort);
+//            Player.findTriples(player[i].rankSort);
+//            Player.findQuads(player[i].rankSort);
+            Player.findFlush(player[i].suitSort);
+            Player.findStraights(player[i].rankSort);
+            Player.findFullHouse(player[i].rankSort);
+            Player.findStraightFlush(player[i].suitSort);
+        }       
     }
 
 }
