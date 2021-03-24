@@ -70,9 +70,9 @@ public class Run {
             Player.printSort(player[i].rankSort,player[i].playerNum);
             Player.printSort(player[i].suitSort,player[i].playerNum);
             System.out.println("Playernum "+player[i].playerNum);
-//            Player.findPairs(player[i].rankSort);
-//            Player.findTriples(player[i].rankSort);
-//            Player.findQuads(player[i].rankSort);
+            Player.findPairs(player[i].rankSort);
+            Player.findTriples(player[i].rankSort);
+            Player.findQuads(player[i].rankSort);
             Player.findFlush(player[i].suitSort);
             Player.findStraights(player[i].rankSort);
             Player.findFullHouse(player[i].rankSort);
