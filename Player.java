@@ -98,7 +98,6 @@ public class Player {
      *
      * @param p
      */
-
     public static void printCard(Player[] p) {
         for (int j = 0; j < p.length; j++) {
             System.out.println("\n");
@@ -123,25 +122,24 @@ public class Player {
         }
         return bins;
     }
-    
 
     public static Vector<Card>[] suitBinSort(Card[] card) {
         Card temp;
         for (int i = 0; i < card.length; i++) {
-            for (int j = 0; j < card.length-1; j++) {
-                if(card[j].rank>card[j+1].rank){
-                    temp=card[j];
-                    card[j]=card[j+1];
-                    card[j+1]=temp;
-                    
+            for (int j = 0; j < card.length - 1; j++) {
+                if (card[j].rank > card[j + 1].rank) {
+                    temp = card[j];
+                    card[j] = card[j + 1];
+                    card[j + 1] = temp;
+
                 }
-                
+
             }
-            
+
         }
-        
+
         Vector<Card>[] bins = new Vector[4];
-        
+
         for (int i = 0; i < bins.length; i++) {
             bins[i] = new Vector<Card>();                 //造bins的空間            
         }
@@ -151,8 +149,7 @@ public class Player {
 //        for (int i = 0; i < bins.length; i++) {
 //            bins[i].;
 //        }
-        
-        
+
 //        for (int i = 0; i < bins.length; i++) {            //BubbleSort之後同花順比較好找     
 //            for (int j = 0; j < bins[i].size(); j++) {
 //                for (int k = 0; k < bins[i].size(); k++) {
@@ -187,9 +184,9 @@ public class Player {
         System.out.println("Pairs: ");
         for (int i = 0; i < cards.length; i++) {
 
-            if (cards[i].size() == 2) {
+            if (cards[i].size() >= 2) {
                 k++;
-                System.out.println(cards[i] + "  ");
+                System.out.println(cards[i].subList(0, 2) + "  ");
             }
         }
         System.out.println("");
@@ -202,7 +199,11 @@ public class Player {
         System.out.println("Flush: ");
         for (int i = 0; i < cards.length; i++) {
             if (cards[i].size() >= 5) {
-                System.out.println(cards[i].subList(0, 5) + "  ");
+                for (int j = 0; j < cards[i].size() - 4; j++) {
+                    System.out.println(cards[i].subList(j, j + 5) + "  ");
+
+                }
+
                 k++;
             }
         }
@@ -215,9 +216,9 @@ public class Player {
         int k = 0;
         System.out.println("Triples: ");
         for (int i = 0; i < cards.length; i++) {
-            if (cards[i].size() == 3) {
+            if (cards[i].size() >= 3) {
                 k++;
-                System.out.println(cards[i] + "  ");
+                System.out.println(cards[i].subList(0, 3) + "  ");
             }
         }
         System.out.println("");
@@ -241,53 +242,51 @@ public class Player {
 
     public static void findFullHouse(Vector<Card>[] cards) {
         Vector<Card>[] fullhouse = new Vector[20];
-        int count=0;
-        int flag=0;
-        
+        int count = 0;
+        int flag = 0;
+
         System.out.println("FullHouse:");
         for (int i = 0; i < fullhouse.length; i++) {
             fullhouse[i] = new Vector<Card>();
-        }        
-        
+        }
+
         for (int i = 0; i < cards.length; i++) {
-            int notri=1;
-            if(cards[i].size()>=3){
-                notri=0;
-                for (int j = 0; j < 3;j++) {                    
-                    fullhouse[count].add(cards[i].get(j));                                                        
-                }                
+            int notri = 1;
+            if (cards[i].size() >= 3) {
+                notri = 0;
+                for (int j = 0; j < 3; j++) {
+                    fullhouse[count].add(cards[i].get(j));
+                }
             }
-            if(notri==0){                
-                for (int j = 0; j < cards.length; j++) {                
-                    if(j!=i){
-                      if(cards[j].size()>=2){
-                       for (int k = 0; k < 2;k++) {
-                         fullhouse[count].add(cards[j].get(k));                                                               
-                        } 
-                        flag=1;                        
-                        break;
-                        }   
+            if (notri == 0) {
+                for (int j = 0; j < cards.length; j++) {
+                    if (j != i) {
+                        if (cards[j].size() >= 2) {
+                            for (int k = 0; k < 2; k++) {
+                                fullhouse[count].add(cards[j].get(k));
+                            }
+                            flag = 1;
+                            break;
+                        }
                     }
 
                 }
-                if(flag==0){
-                    fullhouse[count].clear();           
+                if (flag == 0) {
+                    fullhouse[count].clear();
                 }
-                if(flag==1){
+                if (flag == 1) {
                     count++;
                 }
-            }            
+            }
         }
-        for (int i = 0; i < fullhouse.length; i++) {        
-            if(!fullhouse[i].isEmpty()){                
+        for (int i = 0; i < fullhouse.length; i++) {
+            if (!fullhouse[i].isEmpty()) {
                 System.out.println(fullhouse[i]);
             }
-            
+
         }
         System.out.println("");
         System.out.println("");
-        
-
 
     }
 
@@ -311,6 +310,7 @@ public class Player {
             }
             System.out.print(cards[0].firstElement());
             System.out.print(']');
+            System.out.println("");
         }
         for (int i = 0; i <= pin.length - 5; i++) {
             for (int j = i; j < i + 5; j++) {
@@ -324,6 +324,7 @@ public class Player {
                     System.out.print(cards[j].firstElement());
                 }
                 System.out.print(']');
+                System.out.println("");
             }
             count = 0;
         }
@@ -332,94 +333,148 @@ public class Player {
     }
 
     public static void findStraightFlush(Vector<Card>[] cards) {
-        Vector<Card>[] StraightFlush=new Vector[20];
-        for (int i = 0; i < StraightFlush.length; i++) {
-            StraightFlush[i]=new Vector<Card>();
+        Card[] check = new Card[13];
+        Card[] check1 = new Card[13];
+        Card[] check2 = new Card[13];
+        Card[] check3 = new Card[13];
+        int[] pin = new int[13];
+        int[] pin1 = new int[13];
+        int[] pin2 = new int[13];
+        int[] pin3 = new int[13];
+        for (int i = 0; i < pin3.length; i++) {
+            pin3[i] = 0;
+        }
+        for (int i = 0; i < pin2.length; i++) {
+            pin2[i] = 0;
+        }
+        for (int i = 0; i < pin1.length; i++) {
+            pin1[i] = 0;
+        }
+        for (int i = 0; i < pin.length; i++) {
+            pin[i] = 0;
         }
         System.out.println("StraightFlush:");
-        int[][] pin = new int[4][13];
-        int count=0;
-//        Card temp=new Card();
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 13; j++) {
-                pin[i][j] = 0;
-                
-            }
-            
-        }
-        for (int i = 0; i < cards.length; i++) {        //四種花色各跑一次
-            if(cards[i].size()>=5){                         //花色陣列大於等於5才找
-                for (int j = 0; j < cards[i].size(); j++) {  //先標記有的數 等等在找有無5個相連 和10,J,Q,K,A
-                    pin[i][cards[i].get(j).rank]=1;
-                }    
-            }     
-        }
-        for (int i = 0; i <4; i++) {
-            for (int j = 0; j < pin.length; j++) {
-                System.out.println(pin[i][j]);
-                
-            }
-            
-        }
-        
-        for (int k = 0; k < cards.length; k++) {       //跑四種花色
-            if(pin[k][9]==1&&pin[k][10]==1&&pin[k][11]==1&&pin[k][12]==1&&pin[k][0]==1){
-                for (int i = 0; i < pin.length; i++) {
 
-                    
-                }
-            }
-            for (int i = 0; i < pin.length-5; i++) {    //順子開頭1
-                for (int j = i; j <i+5; j++) {
-                    if(pin[k][j]==1){
-                        count++;
-                    }
-                }
-                if(count==5){
-                    cards[i].get(j).rank
-                }
-                count=0;
-            }
+        for (int i = 0; i < cards[0].size(); i++) {
+            check[cards[0].elementAt(i).rank] = cards[0].elementAt(i);
+            pin[cards[0].elementAt(i).rank] = 1;
         }
-        
+
+        for (int i = 0; i < cards[1].size(); i++) {
+            check1[cards[1].elementAt(i).rank] = cards[1].elementAt(i);
+            pin[cards[1].elementAt(i).rank] = 1;
+        }
+        for (int i = 0; i < cards[2].size(); i++) {
+            check2[cards[2].elementAt(i).rank] = cards[2].elementAt(i);
+            pin2[cards[2].elementAt(i).rank] = 1;
+        }
+        for (int i = 0; i < cards[3].size(); i++) {
+            check3[cards[3].elementAt(i).rank] = cards[3].elementAt(i);
+            pin3[cards[3].elementAt(i).rank] = 1;
+        }
+
+        if (pin[12] == 1 && pin[0] == 1 && pin[9] == 1 && pin[10] == 1 && pin[11] == 1) {
+            for (int i = 9; i < 13; i++) {
+                System.out.print(check[i]);
+
+            }
+            System.out.print(check[0]);
+            System.out.println("");
+        }
+        if (pin1[12] == 1 && pin1[0] == 1 && pin1[9] == 1 && pin1[10] == 1 && pin1[11] == 1) {
+            for (int i = 9; i < 13; i++) {
+                System.out.print(check1[i]);
+
+            }
+            System.out.print(check1[0]);
+            System.out.println("");
+        }
+        if (pin2[12] == 1 && pin2[0] == 1 && pin2[9] == 1 && pin2[10] == 1 && pin2[11] == 1) {
+            for (int i = 9; i < 13; i++) {
+                System.out.print(check2[i]);
+
+            }
+            System.out.print(check2[0]);
+            System.out.println("");
+        }
+        if (pin3[12] == 1 && pin3[0] == 1 && pin3[9] == 1 && pin3[10] == 1 && pin3[11] == 1) {
+            for (int i = 9; i < 13; i++) {
+                System.out.print(check3[i]);
+
+            }
+            System.out.print(check3[0]);
+            System.out.println("");
+        }
+        int count = 0;
+        for (int i = 0; i <= pin.length - 5; i++) {
+            for (int j = i; j < i + 5; j++) {
+                if (pin[j] == 1) {
+                    count++;
+                }
+            }
+            if (count == 5) {
+                System.out.print('[');
+                for (int j = i; j < i + 5; j++) {
+                    System.out.print(check[j]);
+                }
+                System.out.print(']');
+                System.out.println("");
+            }
+            count = 0;
+        }
+
+        for (int i = 0; i <= pin1.length - 5; i++) {
+            for (int j = i; j < i + 5; j++) {
+                if (pin1[j] == 1) {
+                    count++;
+                }
+            }
+            if (count == 5) {
+                System.out.print('[');
+                for (int j = i; j < i + 5; j++) {
+                    System.out.print(check1[j]);
+                }
+                System.out.print(']');
+                System.out.println("");
+            }
+            count = 0;
+        }
+        for (int i = 0; i <= pin2.length - 5; i++) {
+            for (int j = i; j < i + 5; j++) {
+                if (pin2[j] == 1) {
+                    count++;
+                }
+            }
+            if (count == 5) {
+                System.out.print('[');
+                for (int j = i; j < i + 5; j++) {
+                    System.out.print(check2[j]);
+                }
+                System.out.print(']');
+                System.out.println("");
+            }
+            count = 0;
+        }
+        for (int i = 0; i <= pin3.length - 5; i++) {
+            for (int j = i; j < i + 5; j++) {
+                if (pin3[j] == 1) {
+                    count++;
+                }
+            }
+            if (count == 5) {
+                System.out.print('[');
+                for (int j = i; j < i + 5; j++) {
+                    System.out.print(check3[j]);
+                }
+                System.out.print(']');
+                System.out.println("");
+            }
+            count = 0;
+        }
+
+
         System.out.println("");
         System.out.println("");
-//        for (int i = 0; i < cards.length; i++) {
-//            if (cards[i].size() >= 5) {
-//                for (int j = 0; j < pin.length; j++) {
-//                    for (int k = 0; k < pin.length; k++) {                        
-//                        temp=cards[i].sort(cards[i].get(j).rank);                                                    
-//                    }
-//                    
-//                }
-//                for (int j = 0; j < cards[i].size(); j++) {
-//                    pin[cards[i].get(j).rank] = 1;
-//                }
-//                if (pin[0] == 1 && pin[9] == 1 && pin[12] == 1 && pin[11] == 1 && pin[10] == 1) {
-//                    System.out.print('[');
-////                    for (int o = 9; o <= 12; o++) {
-////                        System.out.print(cards[o].firstElement());
-////                    }
-////                    System.out.print(cards[0].firstElement());
-//                    System.out.print(']');
-//                }
-//                for (int o = 0; o <= pin.length - 5; o++) {
-//                    for (int j = o; j < o + 5; j++) {
-//                        if (pin[j] == 1) {
-//                            count++;
-//                        }
-//                    }
-//                    if (count == 5) {
-//                        System.out.print('[');
-//                        for (int j = i; j < i + 5; j++) {
-////                            System.out.print(cards[j].firstElement());
-//                        }
-//                        System.out.print(']');
-//                    }
-//                    count = 0;
-//                }
-//            }
-//        }
 
     }
 }
