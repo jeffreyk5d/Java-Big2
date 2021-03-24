@@ -1,4 +1,5 @@
 
+import java.util.Collections;
 import java.util.Vector;
 
 /*
@@ -122,15 +123,50 @@ public class Player {
         }
         return bins;
     }
+    
 
     public static Vector<Card>[] suitBinSort(Card[] card) {
+        Card temp;
+        for (int i = 0; i < card.length; i++) {
+            for (int j = 0; j < card.length-1; j++) {
+                if(card[j].rank>card[j+1].rank){
+                    temp=card[j];
+                    card[j]=card[j+1];
+                    card[j+1]=temp;
+                    
+                }
+                
+            }
+            
+        }
+        
         Vector<Card>[] bins = new Vector[4];
+        
         for (int i = 0; i < bins.length; i++) {
             bins[i] = new Vector<Card>();                 //造bins的空間            
         }
-        for (int i = 0; i < card.length; i++) {           //把cards按照rank大小放入bins[0]~bins[3]                        
+        for (int i = 0; i < card.length; i++) {           //把cards按照suit放入bins[0]~bins[3]                        
             bins[card[i].suit].add(card[i]);
         }
+//        for (int i = 0; i < bins.length; i++) {
+//            bins[i].;
+//        }
+        
+        
+//        for (int i = 0; i < bins.length; i++) {            //BubbleSort之後同花順比較好找     
+//            for (int j = 0; j < bins[i].size(); j++) {
+//                for (int k = 0; k < bins[i].size(); k++) {
+//                    if(bins[i].get(j).rank>bins[i].get(k).rank){
+//                        temp=bins[i].elementAt(j);
+//                        bins[i].=bins[i].get(k);
+//                        bins[i].elementAt(j)=temp;
+//                    }    
+//                    
+//                }
+//                
+//            }
+//            
+//        }
         return bins;
     }
 
@@ -296,13 +332,58 @@ public class Player {
     }
 
     public static void findStraightFlush(Vector<Card>[] cards) {
-        
-//        int[] pin = new int[13];
-//        int count=0;
+        Vector<Card>[] StraightFlush=new Vector[20];
+        for (int i = 0; i < StraightFlush.length; i++) {
+            StraightFlush[i]=new Vector<Card>();
+        }
+        System.out.println("StraightFlush:");
+        int[][] pin = new int[4][13];
+        int count=0;
 //        Card temp=new Card();
-//        for (int i = 0; i < cards.length; i++) {
-//            pin[i] = 0;
-//        }
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 13; j++) {
+                pin[i][j] = 0;
+                
+            }
+            
+        }
+        for (int i = 0; i < cards.length; i++) {        //四種花色各跑一次
+            if(cards[i].size()>=5){                         //花色陣列大於等於5才找
+                for (int j = 0; j < cards[i].size(); j++) {  //先標記有的數 等等在找有無5個相連 和10,J,Q,K,A
+                    pin[i][cards[i].get(j).rank]=1;
+                }    
+            }     
+        }
+        for (int i = 0; i <4; i++) {
+            for (int j = 0; j < pin.length; j++) {
+                System.out.println(pin[i][j]);
+                
+            }
+            
+        }
+        
+        for (int k = 0; k < cards.length; k++) {       //跑四種花色
+            if(pin[k][9]==1&&pin[k][10]==1&&pin[k][11]==1&&pin[k][12]==1&&pin[k][0]==1){
+                for (int i = 0; i < pin.length; i++) {
+
+                    
+                }
+            }
+            for (int i = 0; i < pin.length-5; i++) {    //順子開頭1
+                for (int j = i; j <i+5; j++) {
+                    if(pin[k][j]==1){
+                        count++;
+                    }
+                }
+                if(count==5){
+                    cards[i].get(j).rank
+                }
+                count=0;
+            }
+        }
+        
+        System.out.println("");
+        System.out.println("");
 //        for (int i = 0; i < cards.length; i++) {
 //            if (cards[i].size() >= 5) {
 //                for (int j = 0; j < pin.length; j++) {
